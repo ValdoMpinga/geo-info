@@ -10,6 +10,8 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
     <link rel="stylesheet" type="text/css" href="index.css" />
+
+</head>
 <body>
     <div id="map-container">
         <div id="map"></div>
@@ -21,12 +23,34 @@
                     </tr>
                 </thead>
                 <tbody id="category-list">
+                    <!-- Category items will be added here dynamically -->
                 </tbody>
             </table>
-            <button onclick="addCategory()">Add Category</button>
+            <button onclick="openCategoryModal()">Add Category</button>
         </div>
     </div>
-</body>
 
-<script src="index.js"></script>
+    <!-- Modal for adding category -->
+    <div id="category-modal">
+        <div id="category-modal-content">
+            <h2>Add Category</h2>
+            <label for="category-name">Name:</label>
+            <input type="text" id="category-name" name="category-name" required>
+            <label for="category-type">Type:</label>
+            <select id="category-type" name="category-type">
+                <option value="point">Point</option>
+                <option value="line">Line</option>
+                <option value="polygon">Polygon</option>
+            </select>
+            <label for="category-color">Color:</label>
+            <input type="color" id="category-color" name="category-color" required>
+            <div class="modal-footer">
+                <button id="save-category-btn" onclick="saveCategory()">Save</button>
+                <button id="cancel-category-btn" onclick="closeCategoryModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="index.js"></script>
+</body>
 </html>

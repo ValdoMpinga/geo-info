@@ -1,19 +1,75 @@
 #map-container {
-    position: relative;
-    height: 100vh;
+  position: relative;
+  height: 100vh;
 }
 
 #map {
-    height: 100%;
-    z-index: 0; 
+  height: 100%;
+  z-index: 0;
 }
 
 #category-manager {
-    position: absolute;
-    top: 100px;
-    left: 10px;
-    background-color: white;
-    padding: 10px;
-    border-radius: 5px;
-    z-index: 1; 
+  position: absolute;
+  top: 100px;
+  left: 10px;
+  background-color: white;
+  padding: 10px;
+  border-radius: 5px;
+  z-index: 1;
+}
+
+#category-modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding-top: 50px;
+}
+
+#category-modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 400px;
+  border-radius: 10px;
+}
+
+#category-modal-content input,
+#category-modal-content select {
+  width: 80%;
+  padding: 10px;
+  margin: 5px 0 20px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#category-modal-content button {
+  width: 40%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#save-category-btn {
+  background-color: #4caf50;
+  color: white;
+}
+
+#cancel-category-btn {
+  background-color: #f44336;
+  color: white;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: space-between;
 }
