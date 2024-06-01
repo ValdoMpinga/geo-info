@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web view app</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <link rel="stylesheet" type="text/css" href="styles/index.css" />
+  </head>
+  <body>
+    <div id="map-container">
+      <div id="map"></div>
+      <div id="category-manager">
+        <h2>Categories</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Category Name</th>
+              <th>Actions</th>
+              <th>Visibility</th>
+            </tr>
+          </thead>
+          <tbody id="category-list">
+            <!-- Category items will be added here dynamically -->
+          </tbody>
+        </table>
+        <button onclick="openCategoryModal()">Add Category</button>
+        <button
+          id="stop-drawing-btn"
+          onclick="stopDrawing()"
+          style="display: none"
+        >
+          Stop Drawing
+        </button>
+      </div>
+    </div>
+
+    <!-- Modal for adding category -->
+    <div id="category-modal">
+      <div id="category-modal-content">
+        <h2>Add Category</h2>
+        <label for="category-name">Name:</label>
+        <input type="text" id="category-name" name="category-name" required />
+        <label for="category-type">Type:</label>
+        <select id="category-type" name="category-type">
+          <option value="point">Point</option>
+          <option value="line">Line</option>
+          <option value="polygon">Polygon</option>
+        </select>
+        <label for="category-color">Color:</label>
+        <input
+          type="color"
+          id="category-color"
+          name="category-color"
+          required
+        />
+        <div class="modal-footer">
+          <button id="save-category-btn" onclick="saveCategory()">Save</button>
+          <button id="cancel-category-btn" onclick="closeCategoryModal()">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal for editing category -->
+    <div id="edit-category-modal">
+      <div id="edit-category-modal-content">
+        <h2>Edit Category</h2>
+        <label for="edit-category-name">Name:</label>
+        <input
+          type="text"
+          id="edit-category-name"
+          name="edit-category-name"
+          required
+        />
+        <label for="edit-category-type">Type:</label>
+        <select id="edit-category-type" name="edit-category-type" disabled>
+          <option value="point">Point</option>
+          <option value="line">Line</option>
+          <option value="polygon">Polygon</option>
+        </select>
+        <label for="edit-category-color">Color:</label>
+        <input
+          type="color"
+          id="edit-category-color"
+          name="edit-category-color"
+          required
+        />
+        <div class="modal-footer">
+          <button id="save-edit-category-btn" onclick="saveEditCategory()">
+            Save
+          </button>
+          <button
+            id="cancel-edit-category-btn"
+            onclick="closeEditCategoryModal()"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="status-message">Select two markers to calculate the distance.</div>
+
+    <script src="categories.js"></script>
+    <script src="drawing.js"></script>
+    <script src="./utils/geometry.js"></script>
+    <script src="./utils/helpers.js"></script>
+    <script src="index.js"></script>
+  </body>
+</html>
