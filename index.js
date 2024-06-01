@@ -96,7 +96,17 @@ function startDrawing(index)
             {
                 if (drawingCategoryIndex !== null)
                 {
-                    var marker = L.marker(e.latlng, { icon: category.icon }).addTo(map);
+                    var marker = L.marker(e.latlng, {
+                        icon: L.icon({
+                            iconUrl: 'https://leafletjs.com/examples/custom-icons/leaf-green.png',
+                            iconSize: [38, 95],
+                            iconAnchor: [22, 94],
+                            popupAnchor: [-3, -76],
+                            shadowUrl: 'https://leafletjs.com/examples/custom-icons/leaf-shadow.png',
+                            shadowSize: [50, 64],
+                            shadowAnchor: [4, 62]
+                        })
+                    }).addTo(map);
                     marker.categoryIndex = drawingCategoryIndex;
                     category.layers.push(marker);
                 }
