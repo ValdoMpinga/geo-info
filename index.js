@@ -13,6 +13,7 @@ var categories = [
 ];
 
 var drawingCategoryIndex = null;
+var selectedMarkers = []; // Array to store selected markers
 
 function renderCategories()
 {
@@ -108,6 +109,7 @@ function startDrawing(index)
                         })
                     }).addTo(map);
                     marker.categoryIndex = drawingCategoryIndex;
+                    marker.on('click', onMarkerClick); // Add click event listener to marker
                     category.layers.push(marker);
                 }
             });
@@ -195,7 +197,6 @@ function calculatePolygonArea(polygon)
     return (area / 1000000).toFixed(2) + ' square kilometers'; // convert to square kilometers
 }
 
-// Load GeometryUtil library for area calculations
 L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
     geodesicArea: function (latlngs)
     {
@@ -219,5 +220,19 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
         return Math.abs(area);
     }
 });
+
+function onMarkerClick(e)
+{
+    selectedMarkers.push(e.target);
+
+    if (selectedMarkers.length === 2)
+    {
+        var marker1 = selectedMarkers[0];
+        var marker2 = selectedMarkers[1];
+        var distance = marker1.getLatLng().distanceTo(marker2.getLatLng());
+        alert('Distance between markers: ' + distance.toFixed(2) + ' meters');
+        selectedMarkers = []; // Reset the selected markers
+    }
+}
 
 renderCategories();
