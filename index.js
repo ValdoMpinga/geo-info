@@ -13,7 +13,7 @@ var categories = [
 ];
 
 var drawingCategoryIndex = null;
-var selectedMarkers = []; // Array to store selected markers
+var selectedMarkers = [];
 
 function renderCategories()
 {
@@ -109,7 +109,10 @@ function startDrawing(index)
                         })
                     }).addTo(map);
                     marker.categoryIndex = drawingCategoryIndex;
-                    marker.on('click', onMarkerClick); // Add click event listener to marker
+                    marker.on('click', function ()
+                    {
+                        handleMarkerClick(marker);
+                    });
                     category.layers.push(marker);
                 }
             });
@@ -197,6 +200,7 @@ function calculatePolygonArea(polygon)
     return (area / 1000000).toFixed(2) + ' square kilometers'; // convert to square kilometers
 }
 
+// Load GeometryUtil library for area calculations
 L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
     geodesicArea: function (latlngs)
     {
@@ -221,18 +225,42 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
     }
 });
 
-function onMarkerClick(e)
+function handleMarkerClick(marker)
 {
-    selectedMarkers.push(e.target);
+    selectedMarkers.push(marker);
+    marker.getElement().classList.add('selected-marker');
+
+    if (selectedMarkers.length === 1)
+    {
+        showStatusMessage('First marker selected. Select the second marker.');
+    }
 
     if (selectedMarkers.length === 2)
     {
-        var marker1 = selectedMarkers[0];
-        var marker2 = selectedMarkers[1];
-        var distance = marker1.getLatLng().distanceTo(marker2.getLatLng());
-        alert('Distance between markers: ' + distance.toFixed(2) + ' meters');
-        selectedMarkers = []; // Reset the selected markers
+        var distance = selectedMarkers[0].getLatLng().distanceTo(selectedMarkers[1].getLatLng());
+        alert('Distance between markers: ' + (distance / 1000).toFixed(2) + ' kilometers');
+
+        // Reset markers
+        selectedMarkers.forEach(function (m)
+        {
+            m.getElement().classList.remove('selected-marker');
+        });
+        selectedMarkers = [];
+        hideStatusMessage();
     }
+}
+
+function showStatusMessage(message)
+{
+    var statusMessage = document.getElementById('status-message');
+    statusMessage.textContent = message;
+    statusMessage.style.display = 'block';
+}
+
+function hideStatusMessage()
+{
+    var statusMessage = document.getElementById('status-message');
+    statusMessage.style.display = 'none';
 }
 
 renderCategories();
