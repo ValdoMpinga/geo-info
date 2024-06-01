@@ -7,10 +7,9 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 // Initial categories
 var categories = [
-    { name: 'Agricultural Land', type: 'polygon', color: '#228B22', icon: null, layers: [] },
-    { name: 'Sanitation', type: 'point', color: '#0000FF', icon: null, layers: [] },
     { name: 'Natural Gas', type: 'line', color: '#FFA500', icon: null, layers: [] },
-    { name: 'Parish Council', type: 'point', color: '#8B0000', icon: null, layers: [] }
+    { name: 'Sanitation', type: 'point', color: '#0000FF', icon: null, layers: [] },
+    { name: 'Agricultural Land', type: 'polygon', color: '#228B22', icon: null, layers: [] },
 ];
 
 var drawingCategoryIndex = null;
@@ -122,6 +121,10 @@ function startDrawing(index)
                     if (polyline === null)
                     {
                         polyline = L.polyline([e.latlng], { color: category.color }).addTo(map);
+                        polyline.on('click', function ()
+                        {
+                            alert('Polyline length: ' + calculatePolylineLength(polyline));
+                        });
                         category.layers.push(polyline);
                     } else
                     {
@@ -166,6 +169,19 @@ function deleteCategory(index)
     });
     categories.splice(index, 1);
     renderCategories();
+}
+
+function calculatePolylineLength(polyline)
+{
+    var latlngs = polyline.getLatLngs();
+    var totalLength = 0;
+
+    for (var i = 0; i < latlngs.length - 1; i++)
+    {
+        totalLength += latlngs[i].distanceTo(latlngs[i + 1]);
+    }
+
+    return totalLength.toFixed(2) + ' meters';
 }
 
 renderCategories();
