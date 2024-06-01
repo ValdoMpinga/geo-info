@@ -29,6 +29,7 @@ function renderCategories()
                     <span>⋮</span>
                     <div class="category-menu-content">
                         <a href="#" onclick="startDrawing(${index})">Draw on Map</a>
+                        <a href="#" onclick="deleteCategory(${index})">Delete</a>
                     </div>
                 </div>
             </td>
@@ -154,6 +155,17 @@ function stopDrawing()
     drawingCategoryIndex = null;
     map.off('click');
     document.getElementById('stop-drawing-btn').style.display = 'none';
+}
+
+function deleteCategory(index)
+{
+    var category = categories[index];
+    category.layers.forEach(function (layer)
+    {
+        map.removeLayer(layer);
+    });
+    categories.splice(index, 1);
+    renderCategories();
 }
 
 renderCategories();
