@@ -5,21 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Web view app</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-
-    <!-- Make sure you put this AFTER Leaflet's CSS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-
     <link rel="stylesheet" type="text/css" href="index.css" />
-
 </head>
 <body>
     <div id="map-container">
         <div id="map"></div>
         <div id="category-manager">
+            <h2>Categories</h2>
             <table>
                 <thead>
                     <tr>
-                        <th>Categories</th>
+                        <th>Category Name</th>
+                        <th>Actions</th>
+                        <th>Visibility</th>
                     </tr>
                 </thead>
                 <tbody id="category-list">
@@ -27,6 +26,7 @@
                 </tbody>
             </table>
             <button onclick="openCategoryModal()">Add Category</button>
+            <button id="stop-drawing-btn" onclick="stopDrawing()" style="display:none;">Stop Drawing</button>
         </div>
     </div>
 
